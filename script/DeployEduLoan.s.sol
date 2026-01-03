@@ -6,11 +6,8 @@ import {EduLoan} from "../src/EduLoan.sol";
 
 contract DeployEduLoan is Script {
     function run() external returns (EduLoan) {
-        // Load private key
-        uint256 deployerPrivateKey = vm.envUint("PRIVATE_KEY");
-
-        // Start broadcasting
-        vm.startBroadcast(deployerPrivateKey);
+        // Start broadcasting (account specified via --account flag)
+        vm.startBroadcast();
 
         // Deploy
         EduLoan eduLoan = new EduLoan();

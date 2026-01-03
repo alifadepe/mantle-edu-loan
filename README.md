@@ -52,12 +52,47 @@ forge test
 forge coverage
 ```
 
+## Keystore Setup (Recommended)
+
+For secure private key management, we recommend using Foundry's encrypted keystore instead of storing raw private keys in `.env` files.
+
+### Create a Keystore
+
+1.  **Import your private key into an encrypted keystore:**
+    ```bash
+    cast wallet import YOUR_KEYSTORE_NAME --interactive
+    ```
+    
+    You'll be prompted to:
+    - Enter your private key (without `0x` prefix)
+    - Create a password to encrypt it
+    
+2.  **Verify your keystore was created:**
+    ```bash
+    cast wallet list
+    ```
+    
+3.  **Get your address from the keystore:**
+    ```bash
+    cast wallet address --account YOUR_KEYSTORE_NAME
+    ```
+
+### Keystore Location
+
+Your encrypted keystore is saved at: `~/.foundry/keystores/YOUR_KEYSTORE_NAME`
+
+### Benefits of Using Keystore
+
+✅ **Encrypted** - Private key is encrypted with your password  
+✅ **Secure** - No raw private keys in files  
+✅ **Professional** - Industry standard practice  
+✅ **Multiple accounts** - Manage multiple keystores easily
+
 ## 🚀 Deployment (Mantle Sepolia)
 
 ### Prerequisites
 1.  Set up your `.env` file (see `.env.example`):
     ```ini
-    PRIVATE_KEY=your_private_key_here
     MANTLE_SEPOLIA_RPC=https://rpc.sepolia.mantle.xyz
     ETHERSCAN_API_KEY=your_etherscan_key
     ```
@@ -70,6 +105,7 @@ Use the provided script to deploy to Mantle Sepolia:
 ```bash
 forge script script/DeployEduLoan.s.sol:DeployEduLoan \
     --rpc-url mantle_sepolia \
+    --account YOUR_KEYSTORE_NAME \
     --broadcast \
     --verify
 ```
